@@ -23,7 +23,7 @@ agent = Agent(
     "de aceptación con los resultados y artefactos disponibles del equipo, e "
     "identificando incumplimientos, brechas de evidencia e incompatibilidades "
     "entre arquitectura, persistencia, implementación, pruebas y seguridad."
-    )
+    ),
     backstory=(
     "Actúas como revisor técnico independiente al cierre del trabajo del equipo. "
     "Analizas el Issue y los resultados disponibles de arquitectura, persistencia "
