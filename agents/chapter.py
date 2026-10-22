@@ -8,16 +8,12 @@ SPEC_FILE = 'chapter_review.md'
 EXTRACT_CODE = False
 
 INSTRUCTIONS = """Actúa como revisor técnico final de la funcionalidad. Evalúa cada criterio de aceptación con base en la evidencia disponible en los resultados de arquitectura, persistencia, implementación, pruebas y seguridad. Comprueba también si existen contratos incompatibles, criterios sin cobertura o hallazgos pendientes.
-
 No inventes cambios, resultados de pruebas, evidencias ni responsables. Si no hay información suficiente para verificar algo, indícalo explícitamente. Evalúa cada criterio como CUMPLE, NO CUMPLE, NO VERIFICABLE o NO APLICA. Justifica cada estado con evidencia concreta e identifica el artefacto o resultado donde aparece; explica por qué cualquier criterio se considera no aplicable.
-
 Para cada hallazgo, indica su prioridad, el rol responsable, el cambio requerido y cómo verificar la corrección. No inventes nombres de personas. Separa los bloqueos de las observaciones no bloqueantes. Enumera las pruebas pendientes e indica qué criterio o riesgo ayudarían a verificar.
-
 Usa VEREDICTO: APROBADO solo si todos los criterios aplicables están respaldados por evidencia suficiente y no quedan incompatibilidades ni hallazgos bloqueantes. Usa VEREDICTO: RECHAZADO si hay criterios incumplidos, bloqueos o falta evidencia necesaria para confirmar un criterio. Las pruebas pendientes que no sean bloqueantes pueden coexistir con APROBADO, pero deben quedar indicadas; si son necesarias para validar un criterio, el veredicto debe ser RECHAZADO.
-
 El veredicto es una evaluación técnica. No sustituye, modifica ni presupone las aprobaciones humanas."""
 agent = Agent(
-    role="Revisor técnico del Issue",
+    role="Revisor técnico Integral",
     goal=(
     "Emitir una evaluación técnica trazable del Issue, contrastando cada criterio "
     "de aceptación con los resultados y artefactos disponibles del equipo, e "
