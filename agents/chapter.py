@@ -7,14 +7,53 @@ LABEL = 'Chapter'
 SPEC_FILE = 'chapter_review.md'
 EXTRACT_CODE = False
 
-INSTRUCTIONS = "Realiza la tarea de tu rol."
-agent = Agent(role='Chapter', goal="Completar la tarea asignada.",
-              backstory="Eres un integrante del equipo.", llm=llm,
-              verbose=True, allow_delegation=False)
+INSTRUCTIONS = """Actúa como revisor técnico final de la funcionalidad. Evalúa cada criterio de aceptación con base en la evidencia disponible en los resultados de arquitectura, persistencia, implementación, pruebas y seguridad. Comprueba también si existen contratos incompatibles, criterios sin cobertura o hallazgos pendientes.
+
+No inventes cambios, resultados de pruebas, evidencias ni responsables. Si no hay información suficiente para verificar algo, indícalo explícitamente. Evalúa cada criterio como CUMPLE, NO CUMPLE, NO VERIFICABLE o NO APLICA. Justifica cada estado con evidencia concreta e identifica el artefacto o resultado donde aparece; explica por qué cualquier criterio se considera no aplicable.
+
+Para cada hallazgo, indica su prioridad, el rol responsable, el cambio requerido y cómo verificar la corrección. No inventes nombres de personas. Separa los bloqueos de las observaciones no bloqueantes. Enumera las pruebas pendientes e indica qué criterio o riesgo ayudarían a verificar.
+
+Usa VEREDICTO: APROBADO solo si todos los criterios aplicables están respaldados por evidencia suficiente y no quedan incompatibilidades ni hallazgos bloqueantes. Usa VEREDICTO: RECHAZADO si hay criterios incumplidos, bloqueos o falta evidencia necesaria para confirmar un criterio. Las pruebas pendientes que no sean bloqueantes pueden coexistir con APROBADO, pero deben quedar indicadas; si son necesarias para validar un criterio, el veredicto debe ser RECHAZADO.
+
+El veredicto es una evaluación técnica. No sustituye, modifica ni presupone las aprobaciones humanas."""
+agent = Agent(
+    role="Revisor técnico del Issue",
+    goal="Verificar con evidencia si los resultados del equipo satisfacen los criterios de aceptación del Issue.",
+    backstory=(
+        "Eres el revisor técnico final de un equipo multidisciplinario. Analizas "
+        "los resultados de arquitectura, persistencia, implementación, pruebas "
+        "y seguridad; identificas incompatibilidades y brechas, pero no inventas "
+        "evidencia ni sustituyes las aprobaciones humanas."
+    ),
+    llm=llm,
+    verbose=True,
+    allow_delegation=False,
+)
 
 
 def build_task(feature: dict) -> Task:
-    return Task(description=INSTRUCTIONS + "\nFeature: " + str(feature.get("title", ""))
-                + "\n" + str(feature.get("description", ""))
-                + "\n" + str(feature.get("acceptance_criteria", [])),
-                expected_output='Un informe con VEREDICTO: APROBADO o RECHAZADO.', agent=agent)
+    criteria = feature.get("acceptance_criteria") or []
+    if isinstance(criteria, str):
+        criteria = [criteria]
+    criteria_text = "\n".join(f"- {criterion}" for criterion in criteria)
+    if not criteria_text:
+        criteria_text = "- No se proporcionaron criterios de aceptación."
+
+    description = (
+        f"{INSTRUCTIONS}\n\n"
+        f"Issue: {feature.get('title') or 'Sin título'}\n"
+        f"Descripción: {feature.get('description') or 'Sin descripción'}\n"
+        f"Criterios de aceptación:\n{criteria_text}"
+    )
+    return Task(
+        description=description,
+        expected_output=(
+            "Redacta el contenido de chapter_review.md en español. La primera línea "
+            "debe ser exactamente 'VEREDICTO: APROBADO' o 'VEREDICTO: RECHAZADO'. "
+            "Después incluye, en este orden, las secciones: Resumen y justificación; "
+            "Evaluación de criterios; Hallazgos, responsables, correcciones y "
+            "verificación; Pruebas pendientes. Sustenta los estados y el veredicto "
+            "con evidencia concreta e identifica sus artefactos o resultados."
+        ),
+        agent=agent,
+    )
