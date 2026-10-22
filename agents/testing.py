@@ -3,12 +3,12 @@ from crewai import Agent, Task
 from crew.llm_config import llm
 
 KEY = 'testing'
-LABEL = 'Analista de datos y pruebas'
+LABEL = 'Ingeniero de pruebas'
 SPEC_FILE = 'testing_report.md'
 EXTRACT_CODE = True
 
 INSTRUCTIONS = (
-    "Actúa como analista de datos y calidad de software con 20 años de experiencia. "
+    "Actúa como Ingeniero de pruebas con 20 años de experiencia. "
     "Aplica shift-left: revisa requisitos, criterios de aceptación, diseño, riesgos y "
     "ambigüedades antes de proponer pruebas; señala preguntas pendientes y supuestos. "
     "Crea una estrategia trazable que cubra pruebas funcionales, estructurales y no "
@@ -36,9 +36,9 @@ INSTRUCTIONS = (
     "resultados, cobertura ni ejecuciones: marca NO EJECUTADO si no existe una salida real, "
     "y distingue claramente lo propuesto de lo ejecutado."
 )
-agent = Agent(role='Analista de datos y pruebas',
+agent = Agent(role='Ingeniero de pruebas',
               goal="Diseñar una estrategia de pruebas medible, trazable y alineada con los riesgos del negocio.",
-              backstory="Eres un analista de datos y calidad con 20 años de experiencia en "
+              backstory="Eres un ingeniero de pruebas con 20 años de experiencia en "
               "validación de requisitos, calidad de datos, automatización y gestión de riesgos.", llm=llm,
               verbose=True, allow_delegation=False)
 
