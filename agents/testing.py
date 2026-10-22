@@ -8,33 +8,14 @@ SPEC_FILE = 'testing_report.md'
 EXTRACT_CODE = True
 
 INSTRUCTIONS = (
-    "Actúa como Ingeniero de pruebas con 20 años de experiencia. "
-    "Aplica shift-left: revisa requisitos, criterios de aceptación, diseño, riesgos y "
-    "ambigüedades antes de proponer pruebas; señala preguntas pendientes y supuestos. "
-    "Crea una estrategia trazable que cubra pruebas funcionales, estructurales y no "
-    "funcionales (rendimiento, seguridad y usabilidad cuando apliquen). Para cada "
-    "escenario relaciona explícitamente cada criterio de aceptación con un identificador "
-    "de prueba y su resultado esperado; indica tipo, prioridad, precondiciones, datos de "
-    "entrada, pasos y métrica o umbral verificable. Incluye casos positivos, negativos, "
-    "de borde e integración, además de casos límite con "
-    "casos límite: valores vacíos, nulos, extremos, formatos inválidos, caracteres "
-    "especiales, duplicados, errores de dependencia y fallos de red. Si hay datos o "
-    "persistencia, verifica los contratos de API (estructura, tipos, códigos HTTP y errores) "
-    "y de persistencia (esquema, restricciones, transacciones y consistencia), además de "
-    "controles de calidad como completitud, unicidad, validez e integridad referencial. "
-    "Evita exponer datos personales y usa datos sintéticos o anonimizados. Para cada suite "
-    "detalla preparación del entorno, preparación y limpieza de datos, pasos de ejecución, "
-    "comandos reproducibles y limpieza posterior; usa aislamiento para que las pruebas sean "
-    "repetibles. Recomienda aislar pruebas unitarias con mocks o stubs y "
-    "automatizar regresión en CI/CD; especifica qué ejecutar en cada etapa. Define "
-    "criterios de entrada y salida, riesgos, cobertura objetivo justificable y brechas. "
-    "Para cada corrección propuesta, incluye una prueba de regresión que reproduzca el defecto "
-    "y una verificación posterior de la corrección, sin afirmar que fue aplicada si no hay evidencia. "
-    "Propón pruebas de seguridad únicamente dentro de un entorno autorizado. Involucra "
-    "desarrollo, QA, negocio y datos en la revisión, y recomienda una revisión trimestral "
-    "de pruebas obsoletas, falsos positivos y alineación con riesgos. No inventes "
-    "resultados, cobertura ni ejecuciones: marca NO EJECUTADO si no existe una salida real, "
-    "y distingue claramente lo propuesto de lo ejecutado."
+    "Tareas del ingeniero de pruebas:\n"
+    "1. Revisar requisitos y criterios de aceptación; señalar ambigüedades, supuestos y riesgos.\n"
+    "2. Relacionar cada criterio con casos identificables y resultados esperados verificables.\n"
+    "3. Diseñar casos positivos, negativos, de borde e integración; validar contratos de API y persistencia cuando estén definidos.\n"
+    "4. Detallar precondiciones, preparación del entorno, datos sintéticos, pasos, comandos reproducibles y limpieza.\n"
+    "5. Proponer automatización, aislamiento de pruebas unitarias y regresión para las correcciones.\n"
+    "6. Generar pruebas Java/Quarkus solo si el código y los contratos disponibles permiten que sean coherentes; no inventar clases, métodos ni endpoints.\n"
+    "7. No afirmar que ejecutaste pruebas ni comandos. Marca NO EJECUTADO salvo que el contexto incluya una salida real."
 )
 agent = Agent(role='Ingeniero de pruebas',
               goal="Diseñar una estrategia de pruebas medible, trazable y alineada con los riesgos del negocio.",
@@ -48,13 +29,13 @@ def build_task(feature: dict) -> Task:
                 + "\n" + str(feature.get("description", ""))
                 + "\n" + str(feature.get("acceptance_criteria", [])),
                 expected_output=(
-                    'Entrega testing_report.md con riesgos y supuestos; matriz que relacione '
-                    'cada criterio de aceptación con pruebas y resultados esperados; casos '
-                    'positivos, negativos, de borde e integración; contratos de API y persistencia; '
-                    'preparación del entorno, datos, comandos reproducibles y limpieza. Incluye '
-                    'pruebas Java/Quarkus ejecutables en bloques java; la primera línea de cada '
-                    'bloque debe ser // NombreTest.java y debe incluir package pe.bcp.login;, '
-                    'verificación de correcciones propuestas, cobertura aplicable, estrategia CI/CD, '
-                    'criterios de entrada/salida y brechas. Registra salidas reales o marca '
-                    'NO EJECUTADO; nunca inventes resultados.'
+                    'Genera el archivo testing_report.md que contiene riesgos y supuestos; matriz criterio-prueba-resultado; '
+                    'casos positivos, negativos, de borde e integración; contratos de API y persistencia '
+                    'cuando estén definidos; preparación, datos, comandos y limpieza; regresión para '
+                    'correcciones; estrategia de automatización, criterios de entrada/salida y brechas. '
+                    'Incluye código Java/Quarkus solo si puede basarse en el contexto disponible. Cada '
+                    'bloque Java extraíble debe iniciar con // NombreTest.java y declarar package '
+                    'pe.bcp.login;. Si faltan datos para un test ejecutable, explica qué falta en vez '
+                    'de inventar código. Registra evidencia real o marca NO EJECUTADO; no afirmes '
+                    'ejecuciones ni cobertura sin evidencia.'
                 ), agent=agent)
