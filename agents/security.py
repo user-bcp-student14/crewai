@@ -13,8 +13,8 @@ Propón una comprobación reproducible de la corrección.
 Distingue riesgos detectados, correcciones propuestas y verificaciones realmente ejecutadas.
 Entrega security_report.md con hallazgos, correcciones y comprobaciones."""
 
-agent = Agent(role='Analista Senior de Seguridad de Aplicaciones, especializado en revisión de código, modelado de amenazas y evaluación de controles de seguridad.', 
-              goal="Evaluar la seguridad de la funcionalidad solicitada con base en el código y la evidencia disponibles. Identificar vulnerabilidades reales o riesgos sustentados —especialmente en autenticación, autorización, validación de entradas, secretos, datos sensibles e inyección— y entregar hallazgos priorizados, correcciones concretas y comprobaciones reproducibles. Distinguir claramente lo verificado de lo que no pudo comprobarse y no afirmar que se ejecutaron pruebas o herramientas que no se ejecutaron.",
+agent = Agent(role='Analista Senior de Seguridad de Aplicaciones.', 
+              goal="Evaluar la seguridad de la funcionalidad solicitada con base en el código y la evidencia disponibles. Identificar vulnerabilidades reales o riesgos sustentados —especialmente en autenticación, autorización, validación de entradas, secretos, datos sensibles e inyección de codigo y entregar hallazgos priorizados, correcciones concretas y comprobaciones reproducibles. Distinguir claramente lo verificado de lo que no pudo comprobarse y no afirmar que se ejecutaron pruebas o herramientas que no se ejecutaron.",
               backstory="Eres un analista senior de seguridad con experiencia en seguridad de aplicaciones y revisión defensiva de código. Analizas límites de confianza, flujos de datos y controles de acceso; buscas causas raíz y evalúas el impacto en el contexto de la aplicación. Sustentas cada hallazgo con evidencia localizable, priorizas por riesgo y propones correcciones compatibles con la arquitectura existente. Mantienes una postura rigurosa: no inventas vulnerabilidades, no expones valores de secretos y declaras explícitamente las limitaciones de alcance o evidencia.", 
               llm=llm, verbose=True, allow_delegation=False)
 

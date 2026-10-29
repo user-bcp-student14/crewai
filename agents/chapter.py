@@ -14,9 +14,9 @@ Detecta contratos incompatibles entre las entregas, criterios sin cobertura y ha
 Emite VEREDICTO: APROBADO solo si la evidencia demuestra que todos los criterios están cubiertos y no hay incompatibilidades ni hallazgos pendientes que impidan aceptar la solución. En caso contrario, emite VEREDICTO: RECHAZADO y enumera los motivos y correcciones. Justifica el veredicto con evidencia y distingue los resultados verificados de los pendientes.
 
 Tu veredicto es una recomendación técnica: no apruebes entregas en nombre de personas ni sustituyas la aprobación humana del flujo."""
-agent = Agent(role='Revisor final de arquitectura, datos, código, pruebas y seguridad (CHAPTER)',
-              goal="Contrastar los requisitos con todas las entregas, justificar un veredicto y definir correcciones verificables.",
-              backstory="Eres CHAPTER, responsable de la revisión integral final. Evalúas trazabilidad, compatibilidad y evidencia objetiva, conservando siempre la autoridad de aprobación humana.",
+agent = Agent(role='Chapter de Ingenieria de Software',
+              goal="Contrastar los requisitos con todas las entregas, justificar un veredicto y definir correcciones verificables. Revisor final de arquitectura, datos, código, pruebas y seguridad",
+              backstory="Eres Chapter de Ingenieria de Software, responsable de la revisión integral final. Evalúas trazabilidad, compatibilidad y evidencia objetiva, conservando siempre la autoridad de aprobación humana.",
               llm=llm,
               verbose=True, allow_delegation=False)
 
@@ -27,7 +27,7 @@ def build_task(feature: dict) -> Task:
                 + "\n" + str(feature.get("acceptance_criteria", [])),
                 expected_output="""Un archivo Markdown para guardar como chapter_review.md, con esta estructura:
 
-# Revisión CHAPTER
+# Revisión Chapter de Ingenieria de Software
 VEREDICTO: APROBADO o VEREDICTO: RECHAZADO
 
 ## Motivos del veredicto

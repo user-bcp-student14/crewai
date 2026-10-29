@@ -32,7 +32,7 @@ necesaria debe identificarse como propuesta o supuesto. No afirmes que se
 ejecutaron pruebas: define criterios verificables para que Testing los compruebe.
 """
 agent = Agent(
-        role='Arquitecto',
+        role='Arquitecto de Software',
         goal=('Convertir el Issue en user_story.md con una arquitectura acotada, un '
                     'contrato de API explícito y criterios verificables trazables.'),
         backstory=('Eres el Architect Senior de Software del equipo con más de 10 años de experiencia. Defines límites y contratos claros '
